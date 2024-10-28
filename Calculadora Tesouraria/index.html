@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Arrecadação</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <script>
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
+        }
+
+        function calcular() {
+            const cursos = {
+                "COREC": 100000,
+                "Profissional": 100000,
+                "Conduta": 100000,
+                "Aperfeiçoamento": 100000,
+                "Estagiário de Fiscalização": 100000,
+                "Agente Formado - Fiscalização": 100000,
+                "GAPE": 500000,
+                "GPI": 250000,
+                "Paraquedista CAOP": 100000,
+                "Atirador CAOP": 100000,
+                "Aeropiloto CAOP": 500000,
+                "COTAR": 500000,
+                "Operações especiais": 250000,
+                "CAM": 250000,
+                "Seletiva DIIC": 500000,
+                "Emboscadas": 300000,
+                "Investigação à pessoas físicas": 300000,
+                "Interrogatório": 500000
+            };
+
+            const id = document.getElementById('id').value;
+            const cursoSelecionado = document.getElementById('cursos').value;
+            const valorArrecadado = document.getElementById('valorArrecadado').value;
+            const linkCurso = document.getElementById('linkCurso').value;
+
+            if (valorArrecadado && id && linkCurso) {
+                const valorCurso = cursos[cursoSelecionado];
+                const valorTesoureiro = valorArrecadado * 0.3;
+
+                const comprovante = `
+\`\`\`  \`\`\` 
+**ID:** ${id}
+**CURSO:** ${cursoSelecionado}
+**LINK DO CURSO:** ${linkCurso}
+**VALOR ARRECADADO:** ${formatarMoeda(valorArrecadado)}
+**TAXA DO TESOUREIRO:** ${formatarMoeda(valorTesoureiro)}
+**FOTO DO COMPROVANTE:**
+**<@&1300258565625221120>**
+
+`;
+
+                document.getElementById('comprovante').value = comprovante.trim();
+            } else {
+                document.getElementById('comprovante').value = 'Por favor, preencha todos os campos.';
+            }
+        }
+
+        function limpar() {
+            document.getElementById('id').value = '';
+            document.getElementById('cursos').selectedIndex = 0;
+            document.getElementById('valorArrecadado').value = '';
+            document.getElementById('linkCurso').value = '';
+            document.getElementById('comprovante').value = '';
+        }
+
+        function copiar() {
+            const comprovante = document.getElementById('comprovante');
+            comprovante.select();
+            document.execCommand('copy');
+            alert('Comprovante copiado para a área de transferência!');
+        }
+    </script>
+</head>
+<body class="container mt-5">
+    <h1 class="text-center"> <img src="">Cálculo de Arrecadação de Cursos</h1>
+    
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" id="id" class="form-control" placeholder="Digite o ID">
+    </div>
+
+    <div class="form-group">
+        <label for="cursos">Cursos:</label>
+        <select id="cursos" class="form-control">
+            <option value="COREC">COREC</option>
+            <option value="Profissional">Profissional</option>
+            <option value="Conduta">Conduta</option>
+            <option value="Aperfeiçoamento">Aperfeiçoamento</option>
+            <option value="Estagiário de Fiscalização">Estagiário de Fiscalização</option>
+            <option value="Agente Formado - Fiscalização">Agente Formado - Fiscalização</option>
+            <option value="GAPE">GAPE</option>
+            <option value="GPI">GPI</option>
+            <option value="Paraquedista CAOP">Paraquedista CAOP</option>
+            <option value="Atirador CAOP">Atirador CAOP</option>
+            <option value="Aeropiloto CAOP">Aeropiloto CAOP</option>
+            <option value="COTAR">COTAR</option>
+            <option value="Operações especiais">Operações especiais</option>
+            <option value="CAM">CAM</option>
+            <option value="Seletiva DIIC">Seletiva DIIC</option>
+            <option value="Emboscadas">Emboscadas</option>
+            <option value="Investigação à pessoas físicas">Investigação à pessoas físicas</option>
+            <option value="Interrogatório">Interrogatório</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="linkCurso">Link do Curso:</label>
+        <input type="text" id="linkCurso" class="form-control" placeholder="Digite o link do curso">
+    </div>
+
+    <div class="form-group">
+        <label for="valorArrecadado">Valor Arrecadado:</label>
+        <input type="number" id="valorArrecadado" class="form-control" placeholder="Digite o valor arrecadado" step="0.01">
+    </div>
+
+    <button class="btn btn-primary" onclick="calcular()">Calcular</button>
+    <button class="btn btn-secondary" onclick="limpar()">Limpar</button>
+
+    <h2 class="mt-4">Comprovante:</h2>
+    <div class="input-group">
+        <textarea id="comprovante" class="form-control" rows="10" readonly></textarea>
+        <div class="input-group-append">
+            <button class="btn btn-success" onclick="copiar()">Copiar</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
